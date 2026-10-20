@@ -1,37 +1,29 @@
-### VARIABLES ###
+NAME    = libft.a
+CC      = cc
+CFLAGS  = -Wall -Wextra -Werror
+SRC_DIR = srcs/
+INC_DIR = includes/
+SRCS    = $(SRC_DIR)ft_putchar.c \
+          $(SRC_DIR)ft_putstr.c \
+          $(SRC_DIR)ft_strcmp.c \
+          $(SRC_DIR)ft_strlen.c \
+          $(SRC_DIR)ft_swap.c
+OBJS    = $(SRCS:.c=.o) main.o
 
-NAME = libft.a
-CC = cc
-FLAGS = -Wall -Wextra -Werror
+all: $(NAME)
 
-SRC_PATH = ./srcs/
-INC_PATH = ./includes/
+$(NAME): $(OBJS)
+	ar rcs $(NAME) $(OBJS)
 
-SRC_FILES = ft_putchar.c \
-			ft_putstr.c \
-			ft_strcmp.c \
-			ft_strlen.c \
-			ft_swap.c
-
-SRC =	$(addprefix $(SRC_PATH), $(SRC_FILES))
-OBJ =	$(SRC:.c=.o) main.o
-
-### RULES ###
-
-%.o:			%.c
-				$(CC) $(FLAGS) -I $(INC_PATH) -c $< -o $@
-
-$(NAME):		$(OBJ)
-				ar rcs $(NAME) $(OBJ)
-
-all:			$(NAME)
+%.o: %.c
+	$(CC) $(CFLAGS) -I $(INC_DIR) -c $< -o $@
 
 clean:
-				rm -f $(OBJ)
+	rm -f $(OBJS)
 
-fclean:			clean
-				rm -f $(NAME)
+fclean: clean
+	rm -f $(NAME)
 
-re:				fclean all
+re: fclean all
 
-.PHONY:			all clean fclean re
+.PHONY: all clean fclean re

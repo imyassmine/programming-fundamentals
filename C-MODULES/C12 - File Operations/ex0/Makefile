@@ -1,33 +1,24 @@
-### VARIABLES ###
+NAME    = ft_display_file
+CC      = cc
+CFLAGS  = -Wall -Wextra -Werror
+SRC_DIR = src/
+SRCS    = $(SRC_DIR)ft_display_file.c
+OBJS    = $(SRCS:.c=.o)
 
-NAME = ft_display_file
-CC = cc
-FLAGS = -Wall -Wextra -Werror
+all: $(NAME)
 
-SRC_PATH = ./src/
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
-SRC_FILES = ft_display_file.c
-
-SRC = $(addprefix $(SRC_PATH), $(SRC_FILES))
-OBJ = $(addprefix $(SRC_PATH), $(SRC_FILES:.c=.o))
-
-### RULES ###
-
-$(SRC_PATH)%.o:	$(SRC_PATH)%.c
-				mkdir -p $(dir $@)
-				$(CC) $(FLAGS) -c $< -o $@
-
-$(NAME): 		$(OBJ)
-				$(CC) $(FLAGS) $(OBJ) -o $(NAME)
-
-all: 			$(NAME)
+$(SRC_DIR)%.o: $(SRC_DIR)%.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-				rm -rf $(OBJ)
+	rm -f $(OBJS)
 
-fclean:			clean
-				rm -rf $(NAME)
+fclean: clean
+	rm -f $(NAME)
 
-re:				fclean all
+re: fclean all
 
-.PHONY:			all clean fclean re
+.PHONY: all clean fclean re

@@ -1,35 +1,27 @@
-### VARIABLES ###
-
-NAME = ft_hexdump
-CC = cc
-FLAGS = -Wall -Wextra -Werror
-
-SRC_PATH = ./src/
-
-SRC_FILES = ft_hexdump.c \
-			utils.c \
-			print_utils.c \
-			print_utils2.c
-
-SRC = $(addprefix $(SRC_PATH), $(SRC_FILES))
-OBJ = $(addprefix $(SRC_PATH), $(SRC_FILES:.c=.o))
-
-### RULES ###
-
-$(SRC_PATH)%.o: $(SRC_PATH)%.c
-				$(CC) $(FLAGS) -c $< -o $@
-
-$(NAME):		$(OBJ)
-				$(CC) $(FLAGS) -o $(NAME) $(OBJ)
+NAME    = ft_hexdump
+CC      = cc
+CFLAGS  = -Wall -Wextra -Werror
+SRC_DIR = src/
+SRCS    = $(SRC_DIR)ft_hexdump.c \
+          $(SRC_DIR)utils.c \
+          $(SRC_DIR)print_utils.c \
+          $(SRC_DIR)print_utils2.c
+OBJS    = $(SRCS:.c=.o)
 
 all: $(NAME)
 
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+
+$(SRC_DIR)%.o: $(SRC_DIR)%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
 clean:
-				rm -rf $(OBJ)
+	rm -f $(OBJS)
 
-fclean:			clean
-				rm -f $(NAME)
+fclean: clean
+	rm -f $(NAME)
 
-re:				fclean all
+re: fclean all
 
-.PHONY:			all clean fclean re
+.PHONY: all clean fclean re
